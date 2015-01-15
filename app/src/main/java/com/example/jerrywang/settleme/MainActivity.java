@@ -1,13 +1,19 @@
 package com.example.jerrywang.settleme;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    static final int PICK_CONTACT_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +36,38 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_new:
+                Intent intent = new Intent(this, AddDebt.class);
+                startActivityForResult(intent, 1);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Function to read the result from newly created activity
+    @Override
+    protected void onActivityResult(int requestCode,
+                                    int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            if(resultCode == 100) {
+                String name = data.getStringExtra("param");
+                createDebt(name);
+            }
         }
 
-        return super.onOptionsItemSelected(item);
+    }
+
+    public void createDebt(String name){
+        LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
+        TextView debt = new TextView(getApplicationContext());
+        debt.setText(name);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        debt.setLayoutParams(params);
+        debt.setTextSize(22);
+        debt.setTextColor(Color.BLACK);
+        ll.addView(debt);
     }
 }
