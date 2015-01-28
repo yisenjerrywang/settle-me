@@ -47,8 +47,11 @@ public class AddDebt extends ActionBarActivity {
     public void addName(View view) {
         Intent intent = new Intent();
         EditText nameField = (EditText) findViewById(R.id.name_text);
+        EditText amountField = (EditText) findViewById(R.id.amount_text);
         String name = nameField.getText().toString();
-        intent.putExtra("param", name);
+        String amount = amountField.getText().toString();
+        intent.putExtra("name", name);
+        intent.putExtra("amount",amount);
         setResult(100, intent);
         finish();
     }
@@ -74,10 +77,8 @@ public class AddDebt extends ActionBarActivity {
                 contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
             }
             cursor.close();
-            Intent intent = new Intent();
-            intent.putExtra("param", contactName);
-            setResult(100, intent);
-            finish();
+            EditText nameField = (EditText) findViewById(R.id.name_text);
+            nameField.setText(contactName);
         }
     }
 }

@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
+            // Starts AddDebt activity
             case R.id.action_new:
                 Intent intent = new Intent(this, AddDebt.class);
                 startActivityForResult(intent, 1);
@@ -53,21 +54,25 @@ public class MainActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1){
             if(resultCode == 100) {
-                String name = data.getStringExtra("param");
-                createDebt(name);
+                String name = data.getStringExtra("name");
+                double amount = Double.parseDouble(data.getStringExtra("amount"));
+                createDebt(name, amount);
             }
         }
 
     }
 
-    public void createDebt(String name){
+    public void createDebt(String name, double amount) {
         LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
-        TextView debt = new TextView(getApplicationContext());
-        debt.setText(name);
+
+        Debt debt = new Debt(name, amount);
+
+        TextView debtHolder = new TextView(getApplicationContext());
+        debtHolder.setText(debt.toString());
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        debt.setLayoutParams(params);
-        debt.setTextSize(22);
-        debt.setTextColor(Color.BLACK);
-        ll.addView(debt);
+        debtHolder.setLayoutParams(params);
+        debtHolder.setTextSize(20);
+        debtHolder.setTextColor(Color.BLACK);
+        ll.addView(debtHolder);
     }
 }

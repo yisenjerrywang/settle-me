@@ -5,6 +5,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="add_debt_person">Enter the name:</string>
+    <string name="add_debt_amount">Enter the amount:</string>
     <string name="action_new">New</string>
     <string name="title_activity_add_debt">AddDebt</string>
     <string name="ok">OK</string>
