@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class AddDebt extends ActionBarActivity {
     static final int REQUEST_SELECT_CONTACT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +44,30 @@ public class AddDebt extends ActionBarActivity {
                 Intent intent = new Intent();
                 EditText nameField = (EditText) findViewById(R.id.name_text);
                 EditText amountField = (EditText) findViewById(R.id.amount_text);
-                String name = nameField.getText().toString();
-                String amount = amountField.getText().toString();
-                intent.putExtra("name", name);
-                intent.putExtra("amount",amount);
-                setResult(100, intent);
-                finish();
-                return true;
+
+                if (nameField.getText().toString().equals("") && amountField.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please specify a name and amount owed",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if (nameField.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please specify a name",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else if (amountField.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please specify an amount owed",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String name = nameField.getText().toString();
+                    String amount = amountField.getText().toString();
+
+                    intent.putExtra("name", name);
+                    intent.putExtra("amount", amount);
+                    setResult(100, intent);
+                    finish();
+                    return true;
+                }
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -63,7 +82,7 @@ public class AddDebt extends ActionBarActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode== REQUEST_SELECT_CONTACT && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_SELECT_CONTACT && resultCode == RESULT_OK) {
             Uri contactUri = data.getData();
             String contactName = null;
             Cursor cursor = getContentResolver().query(contactUri, null, null, null, null);

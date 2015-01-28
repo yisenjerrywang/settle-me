@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
     static final int PICK_CONTACT_REQUEST = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +53,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode,
                                     int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1){
-            if(resultCode == 100) {
+        if (requestCode == 1) {
+            if (resultCode == 100) {
                 String name = data.getStringExtra("name");
                 double amount = Double.parseDouble(data.getStringExtra("amount"));
                 createDebt(name, amount);
