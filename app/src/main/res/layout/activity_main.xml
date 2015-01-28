@@ -3,6 +3,9 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp">
 
 </LinearLayout>

@@ -2,35 +2,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:text="Import from Contacts"
+        android:onClick="addFromContacts"
+        android:layout_marginBottom="10dp"/>
+    <EditText
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:hint="@string/add_debt_person"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <EditText
-            android:id="@+id/name_text"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="10pt"
-            android:hint="@string/add_debt_person"/>
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ok"
-            android:onClick="addName"/>
+            android:text="$"
+            android:textColor="@color/abc_primary_text_material_light"
+            android:textSize="10pt"/>
+        <EditText
+            android:id="@+id/amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10pt"
+            android:hint="@string/add_debt_amount"
+            android:inputType="numberDecimal"/>
         </LinearLayout>
-    <EditText
-        android:id="@+id/amount_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10pt"
-        android:hint="@string/add_debt_amount"
-        android:inputType="numberDecimal"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Import from Contacts"
-        android:onClick="addFromContacts"/>
 
     </LinearLayout>

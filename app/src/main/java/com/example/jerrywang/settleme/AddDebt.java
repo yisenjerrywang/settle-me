@@ -37,24 +37,23 @@ public class AddDebt extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_accept:
+                Intent intent = new Intent();
+                EditText nameField = (EditText) findViewById(R.id.name_text);
+                EditText amountField = (EditText) findViewById(R.id.amount_text);
+                String name = nameField.getText().toString();
+                String amount = amountField.getText().toString();
+                intent.putExtra("name", name);
+                intent.putExtra("amount",amount);
+                setResult(100, intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
-    public void addName(View view) {
-        Intent intent = new Intent();
-        EditText nameField = (EditText) findViewById(R.id.name_text);
-        EditText amountField = (EditText) findViewById(R.id.amount_text);
-        String name = nameField.getText().toString();
-        String amount = amountField.getText().toString();
-        intent.putExtra("name", name);
-        intent.putExtra("amount",amount);
-        setResult(100, intent);
-        finish();
-    }
     public void addFromContacts(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
