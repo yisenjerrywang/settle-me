@@ -1,16 +1,22 @@
 package com.example.jerrywang.settleme;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class AddDebt extends ActionBarActivity {
@@ -21,6 +27,24 @@ public class AddDebt extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_debt);
         Intent intent = getIntent();
+
+        ArrayList<String> nameCollection = new ArrayList<String>();
+        ContentResolver cr = getContentResolver();
+
+        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        while (cursor.moveToNext())
+        {
+            String nameFromContacts = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            Log.d("nameFromContacts", nameFromContacts);
+            nameCollection.add(nameFromContacts);
+        }
+        cursor.close();
+        String[] names = new String[nameCollection.size()];
+        nameCollection.toArray(names);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, names);
+        AutoCompleteTextView nameField = (AutoCompleteTextView) findViewById(R.id.name_text);
+        nameField.setAdapter(adapter);
     }
 
 
@@ -42,8 +66,10 @@ public class AddDebt extends ActionBarActivity {
         switch (id) {
             case R.id.action_accept:
                 Intent intent = new Intent();
-                EditText nameField = (EditText) findViewById(R.id.name_text);
+
+                AutoCompleteTextView nameField = (AutoCompleteTextView) findViewById(R.id.name_text);
                 EditText amountField = (EditText) findViewById(R.id.amount_text);
+
 
                 if (nameField.getText().toString().equals("") && amountField.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Please specify a name and amount owed",
@@ -95,7 +121,7 @@ public class AddDebt extends ActionBarActivity {
                 contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
             }
             cursor.close();
-            EditText nameField = (EditText) findViewById(R.id.name_text);
+            AutoCompleteTextView nameField = (AutoCompleteTextView) findViewById(R.id.name_text);
             nameField.setText(contactName);
         }
     }
